@@ -3,7 +3,16 @@
   "version": "0.0.1",
   "description": "A library wrapping the Android Palette class to extract colors from an image",
   "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native"
+  ],
   "repository": "https://github.com/chetstone/react-native-palette.git",
   "author": "Chester Wood <chet@dewachen.org>",
   "license": "MIT"
+  "peerDependencies": {
+    "react-native": "^0.29.0"
+  }
 }
