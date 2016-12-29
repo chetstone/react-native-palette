@@ -11,7 +11,7 @@
   ],
   "repository": "https://github.com/chetstone/react-native-palette.git",
   "author": "Chester Wood <chet@dewachen.org>",
-  "license": "MIT"
+  "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.29.0"
   }
