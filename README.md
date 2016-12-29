@@ -54,7 +54,7 @@ swatchInfo | A string encapsulating all the above and more. Can be used for debu
             if (error) {
                 console.log(error);
             } else {
-                swatches.sort(a, b) => {
+                swatches.sort((a, b) => {
                     return b.population - a.population;
                 });
                 swatches.forEach((swatch) => {
