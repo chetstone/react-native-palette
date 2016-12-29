@@ -20,19 +20,19 @@ to pick colors from an image.
   - Add `import io.palette.RNPalettePackage;` to the imports at the top of the file
   - Add `new RNPalettePackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
-   ```
+```
    include ':react-native-palette'
    project(':react-native-palette').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-palette/android')
-   ```
+```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-   ```
+```
    compile project(':react-native-palette')
-   ```
+```
 
 
 ## Usage
 
-Call `getSwatches()` with a path to an image  such as that returned by `[react-native-image-picker](https://github.com/marcshilling/react-native-image-picker)` and a callback function. The callback is passed an array of swatches representing the dominant colors in the image. Typically 16 swatches are returned. Each swatch contains the following fields:
+Call `getSwatches()` with a path to an image  such as that returned by [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker) and a callback function. The callback is passed an error parameter and an array of swatches representing the dominant colors in the image. Typically 16 swatches are returned. Each swatch contains the following fields:
 
 ### Fields
 
@@ -43,8 +43,8 @@ population | The population of this swatch in the image. A positive integer. You
 titleTextColor | A text color which contrasts well with the main swatch color for use in titles. Includes alpha as a hex `#rrggbbaa` string.
 bodyTextColor | A text color which contrasts well with the main swatch color for use as body text. Includes alpha as a hex `#rrggbbaa` string.
 swatchInfo | A string encapsulating all the above and more. Can be used for debugging. Note that the hex strings are in the format #aarrggbb rather than that specified above.
-
-    ```javascript
+### Example
+```javascript
     import Palette from 'react-native-palette';
     import ImagePicker from 'react-native-image-picker'
 
@@ -56,4 +56,4 @@ swatchInfo | A string encapsulating all the above and more. Can be used for debu
                 var s = swatches.sort(
         });
     });
-    ```
+```
