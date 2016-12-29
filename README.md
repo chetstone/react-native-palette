@@ -20,10 +20,11 @@ to pick colors from an image.
   - Add `import io.palette.RNPalettePackage;` to the imports at the top of the file
   - Add `new RNPalettePackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
-```
+
+  ```
    include ':react-native-palette'
    project(':react-native-palette').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-palette/android')
-```
+  ```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
 ```
    compile project(':react-native-palette')
@@ -53,7 +54,13 @@ swatchInfo | A string encapsulating all the above and more. Can be used for debu
             if (error) {
                 console.log(error);
             } else {
-                var s = swatches.sort(
+                swatches.sort(a, b) => {
+                    return b.population - a.population;
+                });
+                swatches.forEach((swatch) => {
+                    console.log(swatch.swatchInfo);
+                });
+            }
         });
     });
 ```
