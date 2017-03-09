@@ -1,0 +1,6 @@
+{
+  "ignore_dirs": [
+    ".git",
+    "node_modules/react-native-palette/example",
+  ]
+}

@@ -1,18 +1,20 @@
 # react-native-palette
 
-An Android-only library which wraps the [Android Pallete Class](https://developer.android.com/reference/android/support/v7/graphics/Palette.html)
-to pick colors from an image.
+An React-Native library which on Android, wraps the [Android Pallete Class](https://developer.android.com/reference/android/support/v7/graphics/Palette.html)
+to pick colors from an image. On iOS, it uses code from [react-native-color-grabber](https://github.com/bsudekum/react-native-color-grabber).
 
 ## Getting started
 
 `$ npm install react-native-palette --save`
 
-### Mostly automatic installation
+### Mostly automatic installation for Android
 
 `$ react-native link react-native-palette`
+(iOS currently requires manual installation.)
+
+Includes a small example app.
 
 ### Manual installation
-
 
 #### Android
 
@@ -29,38 +31,81 @@ to pick colors from an image.
 ```
    compile project(':react-native-palette')
 ```
+#### iOS
+
+1. Add `node_modules/react-native-palette/color-grabber` to your Xcode project
+2. In your project `Build Settings` under `Header Search Paths` add
+```
+  $(SRCROOT)/../node_modules/react-native/React
+```
+
+## API
+
+### `getAllSwatches(options, image, (error, swatches) => {})`
+
+#### options
+An object containing option properties. Currently the only supported property is `threshold`, valid for iOS only, which determines whether white or black text will be selected to contrast with the selected color. It is the value for `L`, in the complex formula at the end of this [StackOverflow comment](http://stackoverflow.com/a/3943023/1404185). The default value is 0.179.
+
+#### image
+A path to an image such as that returned by [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker). For iOS use the `origURL` field of the image picker response, because only images from `assets-library://` have been tested. For Android use the `path` field.
+
+#### callback
+The callback is passed an error parameter and an array of swatches representing the dominant colors in the image. Typically 16 swatches are returned on Android, fewer on iOS.
+
+### `getNamedSwatches(image, (error, swatches) => {})`
+
+Android only.
+
+#### image
+
+Same as in `getAllSwatches`
+
+#### swatches
+
+An object keyed by the qualities of colors defined by the Android `Palette` Class.
+The keys are the following:
+
+* "Vibrant"
+* "Vibrant Dark"
+* "Vibrant Light"
+* "Muted"
+* "Muted Dark"
+* "Muted Light"
+
+The values are swatches (possibly `null`) or with the fields defined below.
 
 
-## Usage
+### Swatch Fields
 
-Call `getSwatches()` with a path to an image  such as that returned by [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker) and a callback function. The callback is passed an error parameter and an array of swatches representing the dominant colors in the image. Typically 16 swatches are returned. Each swatch contains the following fields:
-
-### Fields
+Colors include alpha in the `react-native` hexadecimal `#rrggbbaa` format.
 
 Field | Info
 ------ | ----
-color | The main color of the swatch as a hex `#rrggbb` string
-population | The population of this swatch in the image. A positive integer. You can sort on this field to find the most dominant swatch.
-titleTextColor | A text color which contrasts well with the main swatch color for use in titles. Includes alpha as a hex `#rrggbbaa` string.
-bodyTextColor | A text color which contrasts well with the main swatch color for use as body text. Includes alpha as a hex `#rrggbbaa` string.
-swatchInfo | A string encapsulating all the above and more. Can be used for debugging. Note that the hex strings are in the format #aarrggbb rather than that specified above.
+color | The main color of the swatch.
+population | The dominance of this swatch in the image. You can sort on this field to find the most dominant swatch. Android: A positive integer. iOS: A floating point number between 0 and 1.
+titleTextColor | A text color which contrasts well with the main swatch color for use in titles.
+bodyTextColor | A text color which contrasts well with the main swatch color for use as body text.
+swatchInfo | A string encapsulating all the above and more. Can be used for debugging. Android: Note that the hex strings are in the format `#aarrggbb` rather than the `react-native` format. iOS: the result string returned by the old (v0) API.
+
 ### Example
 ```javascript
-    import Palette from 'react-native-palette';
-    import ImagePicker from 'react-native-image-picker'
 
-    ImagePicker.launchImageLibrary({}, (response)  => {
-        Palette.getSwatches(response.path, (error, swatches) => {
-            if (error) {
-                console.log(error);
-            } else {
-                swatches.sort((a, b) => {
-                    return b.population - a.population;
-                });
-                swatches.forEach((swatch) => {
-                    console.log(swatch.swatchInfo);
-                });
-            }
+  import {getAllSwatches} from 'react-native-palette';
+  import ImagePicker from 'react-native-image-picker'
+
+  ImagePicker.launchImageLibrary({}, (response)  => {
+    var path =  Platform.OS === 'ios' ? response.origURL : response.path;
+    getAllSwatches({}, path, (error, swatches) => {
+      if (error) {
+        console.log(error);
+      } else {
+        swatches.sort((a, b) => {
+          return b.population - a.population;
         });
+        swatches.forEach((swatch) => {
+          console.log(swatch.swatchInfo);
+        });
+      }
     });
+  });
 ```
