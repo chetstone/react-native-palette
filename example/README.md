@@ -3,7 +3,7 @@
 Normally, after a code change to react-native-palette `src` files,
 you must remove the node_modules/react-native-palette directory
 and `npm install`.  The react-native packager wont follow symlinks.
-To assist development, use
+To assist development, instead of `npm run start`, use:
 
 ```
 npm run refresh
