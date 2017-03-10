@@ -1,7 +1,7 @@
 'use strict'
 
 import { NativeModules, Platform } from 'react-native';
-const { colorGrabber } = NativeModules;
+const { RNPalette, colorGrabber } = NativeModules;
 
 var Threshold = 0.179; // contrast luminosity. Original formula calls for 0.179
 
@@ -33,7 +33,7 @@ function computeTextColor(uicolors) {
 }
 export const getNamedSwatches = (image, callback) => {
   if (Platform.OS === 'android') {
-    return colorGrabber.getNamedSwatches(image, callback);
+    return RNPalette.getNamedSwatches(image, callback);
   } else {
     callback("Not supported");
   }
@@ -42,7 +42,7 @@ export const getNamedSwatches = (image, callback) => {
 
 export const getAllSwatches = (options, image, callback) => {
   if (Platform.OS === 'android') {
-    return colorGrabber.getAllSwatches(image, callback);
+    return RNPalette.getAllSwatches(image, callback);
   }
   if (options.hasOwnProperty('threshold')) {
     Threshold = options.threshold
