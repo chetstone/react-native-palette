@@ -1,18 +1,22 @@
 # react-native-palette
 
-An React-Native library which on Android, wraps the [Android Pallete Class](https://developer.android.com/reference/android/support/v7/graphics/Palette.html)
-to pick colors from an image. On iOS, it uses code from [react-native-color-grabber](https://github.com/bsudekum/react-native-color-grabber).
+A React-Native library which on Android, wraps the [Android Pallete Class](https://developer.android.com/reference/android/support/v7/graphics/Palette.html) to pick colors from an image. On iOS, it uses code from [react-native-color-grabber](https://github.com/bsudekum/react-native-color-grabber).
+
+ A small example app is included.
+
+## iOS10 Compatability Warning
+**This code currently fails on iOS10 devices if built with an iOS10 SDK.** See [this issue](https://github.com/bsudekum/react-native-color-grabber/issues/2). Note that in `react-native-color-grabber` the component returns wrong results, but in this API an error is returned.
+
+The easiest workaround is to build on XCode 7. That build will work on iOS10 devices.
 
 ## Getting started
 
 `$ npm install react-native-palette --save`
 
-### Mostly automatic installation for Android
+### Mostly automatic installation for Android and iOS
 
 `$ react-native link react-native-palette`
-(iOS currently requires manual installation.)
 
-Includes a small example app.
 
 ### Manual installation
 
@@ -25,7 +29,7 @@ Includes a small example app.
 
   ```
    include ':react-native-palette'
-   project(':react-native-palette').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-palette/android')
+   project(':react-native-palette').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-palette/android')
   ```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
 ```
@@ -33,11 +37,7 @@ Includes a small example app.
 ```
 #### iOS
 
-1. Add `node_modules/react-native-palette/color-grabber` to your Xcode project
-2. In your project `Build Settings` under `Header Search Paths` add
-```
-  $(SRCROOT)/../node_modules/react-native/React
-```
+1. Add `node_modules/react-native-palette/ios/RNPalette.xcodeproj` to your Xcode project
 
 ## API
 
@@ -85,7 +85,7 @@ color | The main color of the swatch.
 population | The dominance of this swatch in the image. You can sort on this field to find the most dominant swatch. Android: A positive integer. iOS: A floating point number between 0 and 1.
 titleTextColor | A text color which contrasts well with the main swatch color for use in titles.
 bodyTextColor | A text color which contrasts well with the main swatch color for use as body text.
-swatchInfo | A string encapsulating all the above and more. Can be used for debugging. Android: Note that the hex strings are in the format `#aarrggbb` rather than the `react-native` format. iOS: the result string returned by the old (v0) API.
+swatchInfo | A string encapsulating all the above and more. Can be used for debugging. Android: Note that the hex strings are in the format `#aarrggbb` rather than the `react-native` format. iOS: the result string returned by the old (`react-native-color-grabber`) API.
 
 ### Example
 ```javascript
