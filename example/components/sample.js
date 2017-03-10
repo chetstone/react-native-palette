@@ -75,6 +75,10 @@ export default Sample = React.createClass( {
     const imagewrapped = isImage ? <Image style={styles.image} source={{uri: 'data:image/jpeg;base64,' + this.state.colors.image, isStatic: true}}>
     {button}
     </Image> : <View>{button}<Text>{this.state.diag}</Text></View>
+    const buttons = Platform.OS === 'ios' ? <View/> :           <View style={styles.optionContainer}>
+            <Button  onPress={this.pressLeft} title={this.state.leftButton} />
+            <Button  onPress={this.pressRight} title={this.state.rightButton} />
+          </View>;
 
     return (
       <View style={styles.container}>
@@ -91,10 +95,7 @@ export default Sample = React.createClass( {
             }
              ) : <Text>{typeof this.state.colors.swatches === 'string'? this.state.colors.swatches :  "Placeholder"}</Text>}
           </View>
-          <View style={styles.optionContainer}>
-            <Button onPress={this.pressLeft} title={this.state.leftButton} />
-            <Button onPress={this.pressRight} title={this.state.rightButton} />
-          </View>
+          {buttons}
     </View>
     );
   }
