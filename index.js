@@ -1,7 +1,7 @@
 'use strict'
 
 import { NativeModules, Platform } from 'react-native';
-const { RNPalette, colorGrabber } = NativeModules;
+const { RNPalette } = NativeModules;
 
 var Threshold = 0.179; // contrast luminosity. Original formula calls for 0.179
 
@@ -47,7 +47,7 @@ export const getAllSwatches = (options, image, callback) => {
   if (options.hasOwnProperty('threshold')) {
     Threshold = options.threshold
   }
-  colorGrabber.getColors(image, (err, res) => {
+  RNPalette.getColors(image, (err, res) => {
     if (err) {
       callback(err);
     } else {
