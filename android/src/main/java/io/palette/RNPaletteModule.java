@@ -41,32 +41,57 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
     return String.format("#%08X", (0xFFFFFFFF & color));
   }
 
-  @ReactMethod
-  public void getSwatches(final String realPath, final Callback callback) {
-
+  private Palette getPallet(final String realPath, final Callback callback) {
     Bitmap bitmap = BitmapFactory.decodeFile(realPath);
 
     if (bitmap == null) {
       callback.invoke("Bitmap Null");
-    } else if (!bitmap.isRecycled()) {
-      WritableArray aSwatches = Arguments.createArray();;
-      Palette palette = Palette.from(bitmap).generate();
-      List<Palette.Swatch> swatches = palette.getSwatches();
-      ListIterator litr = swatches.listIterator();
-      while(litr.hasNext()) {
-        Palette.Swatch element = (Palette.Swatch)litr.next();
-
-        WritableMap swatch = Arguments.createMap();
-        swatch.putString("color", intToRGB(element.getRgb()));
-        swatch.putInt("population", element.getPopulation());
-        swatch.putString("titleTextColor", intToRGBA(element.getTitleTextColor()));
-        swatch.putString("bodyTextColor", intToRGBA(element.getBodyTextColor()));
-        swatch.putString("swatchInfo", element.toString());
-        aSwatches.pushMap(swatch);
-      }
-      callback.invoke(false, aSwatches);
-    } else {
+    } else if (bitmap.isRecycled()) {
       callback.invoke("Bitmap Recycled");
     }
+    return Palette.from(bitmap).generate();
+  }
+
+  private WritableMap convertSwatch(Palette.Swatch swatch) {
+
+    if (swatch == null) {
+      return null;
+    }
+    WritableMap swatchMap = Arguments.createMap();
+    swatchMap.putString("color", intToRGBA(swatch.getRgb()));
+    swatchMap.putInt("population", swatch.getPopulation());
+    swatchMap.putString("titleTextColor", intToRGBA(swatch.getTitleTextColor()));
+    swatchMap.putString("bodyTextColor", intToRGBA(swatch.getBodyTextColor()));
+    swatchMap.putString("swatchInfo", swatch.toString());
+    return swatchMap;
+  }
+
+  @ReactMethod
+  public void getNamedSwatches(final String realPath, final Callback callback) {
+    Palette palette = getPallet(realPath, callback);
+    WritableMap swatches = Arguments.createMap();
+
+    swatches.putMap("Vibrant", convertSwatch(palette.getVibrantSwatch()));
+    swatches.putMap("Vibrant Dark", convertSwatch(palette.getDarkVibrantSwatch()));
+    swatches.putMap("Vibrant Light", convertSwatch(palette.getLightVibrantSwatch()));
+    swatches.putMap("Muted", convertSwatch(palette.getMutedSwatch()));
+    swatches.putMap("Muted Dark", convertSwatch(palette.getDarkMutedSwatch()));
+    swatches.putMap("Muted Light", convertSwatch(palette.getLightMutedSwatch()));
+
+    callback.invoke(false, swatches);
+  }
+
+  @ReactMethod
+    public void getAllSwatches(final String realPath, final Callback callback) {
+
+    Palette palette = getPallet(realPath, callback);
+    WritableArray aSwatches = Arguments.createArray();
+    List<Palette.Swatch> swatches = palette.getSwatches();
+    ListIterator litr = swatches.listIterator();
+    while(litr.hasNext()) {
+      Palette.Swatch swatch = (Palette.Swatch)litr.next();
+      aSwatches.pushMap(convertSwatch(swatch));
+    }
+    callback.invoke(false, aSwatches);
   }
 }
