@@ -60,7 +60,7 @@ export default Sample = React.createClass( {
   },
 
   render() {
-    console.log(this.state.colors);
+    //console.log(this.state.colors);
     let isImage = this.state.colors && this.state.colors.image;
     let buttonText = `Load ${isImage? "Another":""} Image`
     let textColor = this.state.colors && this.state.colors.swatches && this.state.colors.swatches[0].bodyTextColor  ? this.state.colors.swatches[0].bodyTextColor : 'white'

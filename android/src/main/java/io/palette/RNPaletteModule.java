@@ -2,6 +2,7 @@ package io.palette;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.BitmapFactory.Options;
 import android.support.v7.graphics.Palette;
 import android.support.v7.graphics.Palette.Swatch;
@@ -32,13 +33,8 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
     return "RNPalette";
   }
 
-  private String intToRGB(int color) {
-    return String.format("#%06X", (0xFFFFFF & color));
-  }
-
   private String intToRGBA(int color) {
-    color = Integer.rotateLeft(color, 8);
-    return String.format("#%08X", (0xFFFFFFFF & color));
+    return String.format("rgba(%d,%d,%d,%d)", Color.red(color), Color.green(color), Color.blue(color), Color.alpha(color));
   }
 
   private Palette getPallet(final String realPath, final Callback callback) {

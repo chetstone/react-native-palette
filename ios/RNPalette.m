@@ -1,23 +1,24 @@
 #import "RNPalette.h"
-#import "RCTLog.h"
+#import "RCTConvert.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @implementation RNPalette
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(getColors:(NSString *)path callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(getColors:(NSString *)path options:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback)
 {
 
   NSURL* aURL = [NSURL URLWithString:path];
   ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+  float dimension = [RCTConvert float:options[@"dimension"]]; // 4
+  float flexibility = [RCTConvert float:options[@"flexibility"]]; // 5;
+  float range = [RCTConvert float:options[@"range"]]; // 40;
+
 
   [library assetForURL:aURL resultBlock:^(ALAsset *asset) {
     UIImage  *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
 
-    float dimension = 4;
-    float flexibility = 5;
-    float range = 40;
 
     // determine the colours in the image
     NSMutableArray * colours = [NSMutableArray new];

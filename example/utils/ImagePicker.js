@@ -30,6 +30,9 @@ export default function(storeImage, useNamed) {
     maxHeight: max|0,
   };
 
+
+  let pickOptions = {quality: "low"};
+
   //console.log("In ImagePicker");
   ImagePicker.launchImageLibrary(options, (response) => {
     var colors = {};
@@ -61,7 +64,7 @@ export default function(storeImage, useNamed) {
           storeImage(colors);
         });
       } else {
-        getAllSwatches({}, path, (error, swatches) => {
+        getAllSwatches(pickOptions, path, (error, swatches) => {
           if ( error) {
             console.log(error);
             colors.swatches = error;
