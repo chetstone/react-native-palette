@@ -45,7 +45,7 @@ There are two properties and they're valid for iOS only. On Android, this parame
 Property | Type | Info
 -------- | ---- | ----
 `threshold` | Float | Determines whether white or black text will be selected to contrast with the selected color. It is the value for `L`, in the complex formula at the end of this [StackOverflow comment](http://stackoverflow.com/a/3943023/1404185). The default value is 0.179.
-`quality` | String | One of "low", "medium", or "high". Higher quality extracts more colors, takes more time and consumes more memory.
+`quality` | String | One of "low", "medium", or "high". Higher quality extracts more colors, takes more time and consumes more memory. Default is "low".
 
 #### image
 A path to an image such as that returned by [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker). For iOS use the `origURL` field of the image picker response, because only images from `assets-library://` have been tested. For Android use the `path` field.
@@ -78,7 +78,7 @@ The values are swatches (possibly `null`) or with the fields defined below.
 
 ### Swatch Fields
 
-Colors include alpha in the `react-native`  `rgba(255,255,255,255)` format.
+Colors include alpha in the `react-native`  `rgba(255,255,255,255)` format. Note that on iOS10 devices UIExtendedSRGBColorSpace color values may be greater than 255 or less than 0, but they will render correctly on the device.
 
 Field | Info
 ------ | ----
