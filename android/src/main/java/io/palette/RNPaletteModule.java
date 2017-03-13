@@ -34,7 +34,7 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
   }
 
   private String intToRGBA(int color) {
-    return String.format("rgba(%d,%d,%d,%d)", Color.red(color), Color.green(color), Color.blue(color), Color.alpha(color));
+    return String.format("rgba(%d,%d,%d,%.3f)", Color.red(color), Color.green(color), Color.blue(color), (float)(Color.alpha(color))/255.0);
   }
 
   private Palette getPallet(final String realPath, final Callback callback) {

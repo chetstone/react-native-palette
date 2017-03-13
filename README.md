@@ -78,7 +78,7 @@ The values are swatches (possibly `null`) or with the fields defined below.
 
 ### Swatch Fields
 
-Colors include alpha in the `react-native`  `rgba(255,255,255,255)` format. Note that on iOS10 devices UIExtendedSRGBColorSpace color values may be greater than 255 or less than 0, but they will render correctly on the device.
+Colors include alpha in the `react-native`  `rgba(255,255,255,1.0)` format. Note that on iOS10 devices UIExtendedSRGBColorSpace color values may be greater than 255 or less than 0, but they will render correctly on the device.
 
 Field | Info
 ------ | ----

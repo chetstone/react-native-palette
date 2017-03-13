@@ -82,7 +82,7 @@ export const getAllSwatches = (options, image, callback) => {
         var b = uicolors[2];
         var a = uicolors[3];
         var hex = '#' + toHex(r*255) + toHex(g*255) +toHex(b*255) + toHex(a*255);
-        var rgba = `rgba(${(r*255).toFixed(0)}, ${(g*255).toFixed(0)}, ${(b*255).toFixed(0)}, ${(a*255).toFixed(0)})`
+        var rgba = `rgba(${(r*255).toFixed(0)}, ${(g*255).toFixed(0)}, ${(b*255).toFixed(0)}, ${a})`
         //console.log("RGB: ", UIColor, "Dominance: ",res[UIColor], "HEX:", hex);
         swatches.push({color: rgba,
                        population: res[UIColor],
