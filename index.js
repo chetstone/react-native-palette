@@ -5,6 +5,14 @@ const { RNPalette } = NativeModules;
 
 var Threshold = 0.179; // contrast luminosity. Original formula calls for 0.179
 
+var iOSOptions = {
+low: { dimension: 5, flexibility: 5, range: 40 },
+medium: { dimension: 8, flexibility: 5, range: 40 },
+high: { dimension: 10, flexibility: 10, range: 30 }
+};
+
+let quality = "low"
+
 function toHex(d) {
   return  ("0"+(Math.round(d).toString(16))).slice(-2).toUpperCase()
 }
@@ -45,9 +53,14 @@ export const getAllSwatches = (options, image, callback) => {
     return RNPalette.getAllSwatches(image, callback);
   }
   if (options.hasOwnProperty('threshold')) {
-    Threshold = options.threshold
+    Threshold = options.threshold;
   }
-  RNPalette.getColors(image, (err, res) => {
+
+  if (options.hasOwnProperty('quality')) {
+    quality = options.quality
+  }
+
+  RNPalette.getColors(image, iOSOptions[quality], (err, res) => {
     if (err) {
       callback(err);
     } else {
@@ -62,11 +75,6 @@ export const getAllSwatches = (options, image, callback) => {
         var uicolors = UIColor.split(' ');
         var colorSpace = uicolors.shift();
 
-        if (colorSpace !== 'UIDeviceRGBColorSpace') {
-          callback(`Unsupported colorspace: ${colorSpace}`);
-          return;
-        }
-
         var textColor = computeTextColor(uicolors);
 
         var r = uicolors[0];
@@ -74,8 +82,9 @@ export const getAllSwatches = (options, image, callback) => {
         var b = uicolors[2];
         var a = uicolors[3];
         var hex = '#' + toHex(r*255) + toHex(g*255) +toHex(b*255) + toHex(a*255);
+        var rgba = `rgba(${(r*255).toFixed(0)}, ${(g*255).toFixed(0)}, ${(b*255).toFixed(0)}, ${a})`
         //console.log("RGB: ", UIColor, "Dominance: ",res[UIColor], "HEX:", hex);
-        swatches.push({color: hex,
+        swatches.push({color: rgba,
                        population: res[UIColor],
                        bodyTextColor: textColor,
                        titleTextColor: textColor,
