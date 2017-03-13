@@ -1,8 +1,8 @@
 # react-native-palette
 
-A React-Native library which on Android, wraps the [Android Pallete Class](https://developer.android.com/reference/android/support/v7/graphics/Palette.html) to pick colors from an image. On iOS, it uses code from [react-native-color-grabber](https://github.com/bsudekum/react-native-color-grabber).
+A React-Native library which extracts prominent colors from an image. On Android, it wraps the [Android Pallete Class](https://developer.android.com/reference/android/support/v7/graphics/Palette.html). On iOS, it uses code from [react-native-color-grabber](https://github.com/bsudekum/react-native-color-grabber).
 
- A small example app is included.
+ An example app is included.
 
 ## Getting started
 
@@ -30,6 +30,8 @@ A React-Native library which on Android, wraps the [Android Pallete Class](https
 ```
    compile project(':react-native-palette')
 ```
+
+
 #### iOS
 
 1. Add `node_modules/react-native-palette/ios/RNPalette.xcodeproj` to your Xcode project

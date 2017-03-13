@@ -1,16 +1,21 @@
 {
   "name": "react-native-palette",
   "version": "0.3.0",
-  "description": "A react native component to extract colors from an image",
+  "description": "A react native component to extract prominent colors from an image",
   "keywords": [
     "react-native",
-    "react-component",
-    "ios",
+    "react native",
     "react",
     "native",
+    "react-component",
     "color",
+    "colors",
+    "extract",
+    "pick",
+    "picker",
     "image",
-    "dominant"
+    "dominant",
+    "prominent"
   ],
   "main": "index.js",
   "scripts": {
