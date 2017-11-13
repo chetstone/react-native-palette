@@ -2929,13 +2929,13 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
-react-native-image-picker@^0.24.1:
+react-native-image-picker@0.24.1:
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.24.1.tgz#0a73fc66ec9e0d28bf3a75df996ad29f695d016c"
 
-"react-native-palette@https://github.com/chetstone/react-native-palette":
-  version "0.1.0"
-  resolved "https://github.com/chetstone/react-native-palette#67d6c25333d5025a773a5919dc4bb2ecfd5019df"
+react-native-palette@*:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-palette/-/react-native-palette-0.3.1.tgz#c16d5ed5028f94cdeebde0e890a8334490ca9ea4"
 
 react-native@0.40.0:
   version "0.40.0"

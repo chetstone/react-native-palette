@@ -8,11 +8,13 @@
     "react",
     "native",
     "react-component",
+    "palette",
     "color",
     "colors",
     "extract",
     "pick",
     "picker",
+    "grabber",
     "image",
     "dominant",
     "prominent"
