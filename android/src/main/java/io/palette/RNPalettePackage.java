@@ -16,7 +16,6 @@ public class RNPalettePackage implements ReactPackage {
       return Arrays.<NativeModule>asList(new RNPaletteModule(reactContext));
     }
 
-    @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
       return Collections.emptyList();
     }
