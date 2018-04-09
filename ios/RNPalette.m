@@ -8,8 +8,11 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(getColors:(NSString *)path options:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback)
 {
-
   NSURL* aURL = [NSURL URLWithString:path];
+
+  if (![path hasPrefix:@"assets-library:"]) {
+      aURL = [[NSURL alloc] initWithString:path];
+  }
   ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
   float dimension = [RCTConvert float:options[@"dimension"]]; // 4
   float flexibility = [RCTConvert float:options[@"flexibility"]]; // 5;
@@ -18,7 +21,9 @@ RCT_EXPORT_METHOD(getColors:(NSString *)path options:(NSDictionary *)options cal
 
   [library assetForURL:aURL resultBlock:^(ALAsset *asset) {
     UIImage  *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:0.5 orientation:UIImageOrientationUp];
-
+    if (![path hasPrefix:@"assets-library:"]) {
+      image = [UIImage imageWithData:[NSData dataWithContentsOfURL:aURL]];
+    }
 
     // determine the colours in the image
     NSMutableArray * colours = [NSMutableArray new];
@@ -35,21 +40,25 @@ RCT_EXPORT_METHOD(getColors:(NSString *)path options:(NSDictionary *)options cal
 
     float x = 0;
     float y = 0;
+    int pixelCount = 0;
     for (int n = 0; n<(dimension*dimension); n++){
 
       int index = (bytesPerRow * y) + x * bytesPerPixel;
-      int red   = rawData[index];
-      int green = rawData[index + 1];
-      int blue  = rawData[index + 2];
-      int alpha = rawData[index + 3];
-      NSArray * a = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%i",red],[NSString stringWithFormat:@"%i",green],[NSString stringWithFormat:@"%i",blue],[NSString stringWithFormat:@"%i",alpha], nil];
-      [colours addObject:a];
-
       y++;
       if (y==dimension){
         y=0;
         x++;
       }
+      int red   = rawData[index];
+      int green = rawData[index + 1];
+      int blue  = rawData[index + 2];
+      int alpha = rawData[index + 3];
+      if (red + blue + green > 60) {
+        NSArray * a = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%i",red],[NSString stringWithFormat:@"%i",green],[NSString stringWithFormat:@"%i",blue],[NSString stringWithFormat:@"%i",alpha], nil];
+        [colours addObject:a];
+        pixelCount++;
+      }
+
     }
     free(rawData);
 
@@ -59,9 +68,20 @@ RCT_EXPORT_METHOD(getColors:(NSString *)path options:(NSDictionary *)options cal
 
     float flexFactor = flexibility * 2 + 1;
     float factor = flexFactor * flexFactor * 3; //(r,g,b) == *3
-    for (int n = 0; n<(dimension * dimension); n++){
+    for (int n = 0; n<pixelCount; n++){
 
       NSArray * pixelColours = copyColours[n];
+      // NSString * redStr = pixelColours[0];
+      // NSString * greenStr = pixelColours[1];
+      // NSString * blueStr = pixelColours[2];
+      // int baseRed = [redStr intValue];
+      // int baseGreen = [greenStr intValue];
+      // int baseBlue = [blueStr intValue];
+
+      // if (baseRed + baseBlue + baseGreen < 180) {
+      //   continue;
+      // }
+
       NSMutableArray * reds = [NSMutableArray new];
       NSMutableArray * greens = [NSMutableArray new];
       NSMutableArray * blues = [NSMutableArray new];
