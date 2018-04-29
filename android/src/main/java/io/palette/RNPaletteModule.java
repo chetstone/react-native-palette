@@ -19,6 +19,14 @@ import java.util.List;
 import java.util.ListIterator;
 import java.lang.Integer;
 
+import android.util.Patterns;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.io.InputStream;
+
 public class RNPaletteModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
@@ -38,7 +46,23 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
   }
 
   private Palette getPallet(final String realPath, final Callback callback) {
-    Bitmap bitmap = BitmapFactory.decodeFile(realPath);
+
+    Bitmap bitmap = null;
+
+    if (Patterns.WEB_URL.matcher(realPath).matches()){
+      try{
+        URL url = new URL(realPath);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoInput(true);
+        connection.connect();
+        InputStream input = connection.getInputStream();
+        bitmap = BitmapFactory.decodeStream(input);
+      } catch (Exception e){
+        //TODO: Handle Errors
+      }
+    } else {
+      bitmap = BitmapFactory.decodeFile(realPath);
+    }
 
     if (bitmap == null) {
       callback.invoke("Bitmap Null");
