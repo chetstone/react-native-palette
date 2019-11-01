@@ -18,7 +18,7 @@ export default class example extends Component {
   render() {
     return (
       <View style={styles.container}>
-          <Sample/>
+        <Sample/>
       </View>
     );
   }

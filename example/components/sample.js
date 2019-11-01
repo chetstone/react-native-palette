@@ -8,17 +8,18 @@ import React, { Component } from 'react';
 import {
   Alert,
   Button,
-  Image,
+  ImageBackground,
   NativeModules,
   Platform,
   StyleSheet,
   Text,
   View
 } from 'react-native';
+var createReactClass = require('create-react-class');
 
 import imagePicker from '../utils/ImagePicker'
 
-export default Sample = React.createClass( {
+export default Sample = createReactClass( {
   getInitialState: function() {
     return {
       colors: {},
@@ -72,9 +73,9 @@ export default Sample = React.createClass( {
                 color={buttonColor}
                 accessibilityLabel="Learn more about this purple button"
                 />;
-    const imagewrapped = isImage ? <Image style={styles.image} source={{uri: 'data:image/jpeg;base64,' + this.state.colors.image, isStatic: true}}>
+    const imagewrapped = isImage ? <ImageBackground style={styles.image} source={{uri: 'data:image/jpeg;base64,' + this.state.colors.image, isStatic: true}}>
     {button}
-    </Image> : <View>{button}<Text>{this.state.diag}</Text></View>
+    </ImageBackground> : <View>{button}<Text>{this.state.diag}</Text></View>
     const buttons = Platform.OS === 'ios' ? <View/> :           <View style={styles.optionContainer}>
             <Button  onPress={this.pressLeft} title={this.state.leftButton} />
             <Button  onPress={this.pressRight} title={this.state.rightButton} />
