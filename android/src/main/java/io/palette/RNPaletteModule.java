@@ -17,6 +17,7 @@ import com.facebook.react.bridge.WritableArray;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.lang.Integer;
 
 public class RNPaletteModule extends ReactContextBaseJavaModule {
@@ -34,18 +35,21 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
   }
 
   private String intToRGBA(int color) {
-    return String.format("rgba(%d,%d,%d,%.3f)", Color.red(color), Color.green(color), Color.blue(color), (float)(Color.alpha(color))/255.0);
+      return String.format(Locale.ROOT,"rgba(%d,%d,%d,%.3f)", Color.red(color), Color.green(color), Color.blue(color), (float)(Color.alpha(color))/255.0);
   }
 
   private Palette getPallet(final String realPath, final Callback callback) {
     Bitmap bitmap = BitmapFactory.decodeFile(realPath);
-
+    // Throws if the specified color space is not ColorSpace.Model#RGB,
+    // or if the specified color space's transfer function is not an ColorSpace.Rgb.TransferParameters
     if (bitmap == null) {
       callback.invoke("Bitmap Null");
     } else if (bitmap.isRecycled()) {
       callback.invoke("Bitmap Recycled");
     }
     return Palette.from(bitmap).generate();
+    // no info on error return or throw
+    // https://developer.android.com/reference/android/support/v7/graphics/Palette.Builder
   }
 
   private WritableMap convertSwatch(Palette.Swatch swatch) {
