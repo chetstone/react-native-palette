@@ -10,10 +10,10 @@ npm run refresh
 ```
 
 This will remove the node_modules/react-native-palette directory,
-copy the react-native-palette `src` files from `..` and start the
-packager. Since the packager won't notice changes in `node_modules`,
+copy the react-native-palette `src` files from `..`.
+Since the packager won't notice changes in `node_modules`,
 each time you make a change in the `src` files, you will need to
-manually kill the packager with `^C`, then just rerun `npm run refresh`
+manually kill the packager with `^C`, then just rerun `npm run refresh; npm run start`
 
 
 Alternately the following command watches and rsyncs changes:

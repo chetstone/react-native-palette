@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint .",
     "sync": "rm -rf ./node_modules/react-native-palette; sane '/usr/bin/rsync -v -a --exclude .git --exclude example\\* --exclude node_modules ../ ./node_modules/react-native-palette/' .. --glob='{**/*.json,**/*.js}'",
-    "refresh": "rm -rf ./node_modules/react-native-palette;cd ..;find . -name .git -prune -o -name node_modules -prune -o -name example\\* -prune -o -type d -exec mkdir -p ./example/node_modules/react-native-palette/{} \\; -o -exec cp {} ./example/node_modules/react-native-palette/{} \\; ;react-native start"
+    "refresh": "rm -rf ./node_modules/react-native-palette;cd ..;find . -name .git -prune -o -name node_modules -prune -o -name example\\* -prune -o -type d -exec mkdir -p ./example/node_modules/react-native-palette/{} \\; -o -exec cp {} ./example/node_modules/react-native-palette/{} \\;"
   },
   "dependencies": {
     "create-react-class": "^15.6.3",
