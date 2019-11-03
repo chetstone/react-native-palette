@@ -4,8 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.BitmapFactory.Options;
-import android.support.v7.graphics.Palette;
-import android.support.v7.graphics.Palette.Swatch;
+import androidx.palette.graphics.Palette;
+import androidx.palette.graphics.Palette.Swatch;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
