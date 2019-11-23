@@ -8,6 +8,18 @@ A React-Native library which extracts prominent colors from an image. On Android
 
 `$ npm install react-native-palette --save`
 
+or
+
+`yarn add react-native-palette`
+
+## For use on React-Native >= 0.60.0
+
+Use version >= 1.0.0 of this package, which supports autolinking. No further installation steps are required.
+
+## For use on React-Native < 0.60.0
+
+Use version 0.4.x of this package and follow linking steps below:
+
 ### Mostly automatic installation for Android and iOS
 
 `$ react-native link react-native-palette`
