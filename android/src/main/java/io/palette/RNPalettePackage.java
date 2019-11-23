@@ -16,6 +16,7 @@ public class RNPalettePackage implements ReactPackage {
       return Arrays.<NativeModule>asList(new RNPaletteModule(reactContext));
     }
 
+    // Extra?? Not in template from create-react-native-module
     public List<Class<? extends JavaScriptModule>> createJSModules() {
       return Collections.emptyList();
     }
