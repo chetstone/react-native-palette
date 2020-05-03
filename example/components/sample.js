@@ -51,12 +51,12 @@ export default Sample = createReactClass( {
       this.setState({useNamed: true});
     }
   },
-  onPress() {
+  onPress(useUri) {
     console.log("Button pressed");
     if (this.state.api === 'v1') {
-      imagePicker(this.storeImage, this.state.useNamed);
+      imagePicker(this.storeImage, this.state.useNamed, useUri);
     } else {
-      imagePicker(this.storeImage, this.state.useNamed);
+      imagePicker(this.storeImage, this.state.useNamed, useUri);
     }
   },
 
@@ -67,12 +67,21 @@ export default Sample = createReactClass( {
     let textColor = this.state.colors && this.state.colors.swatches && this.state.colors.swatches[0].bodyTextColor  ? this.state.colors.swatches[0].bodyTextColor : 'white'
     let domColor = this.state.colors && this.state.colors.swatches && this.state.colors.swatches[0].color
     let buttonColor = domColor? domColor: "#841584"
-    const button = <Button
-                onPress={this.onPress}
-                title={buttonText}
-                color={buttonColor}
-                accessibilityLabel="Learn more about this purple button"
-                />;
+    const button = <View>
+      <Button
+        onPress={() => this.onPress(false)}
+        title={buttonText}
+        color={buttonColor}
+        accessibilityLabel="Learn more about this purple button"
+      />
+      <Button
+        onPress={() => this.onPress(true)}
+        title={"Load Image and Use URI"}
+        color={buttonColor}
+        accessibilityLabel="Learn more about this purple button"
+      />
+    </View>;
+    
     const imagewrapped = isImage ? <ImageBackground style={styles.image} source={{uri: 'data:image/jpeg;base64,' + this.state.colors.image, isStatic: true}}>
     {button}
     </ImageBackground> : <View>{button}<Text>{this.state.diag}</Text></View>
