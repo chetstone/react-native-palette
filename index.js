@@ -4,6 +4,7 @@ import { NativeModules, Platform } from 'react-native';
 const { RNPalette } = NativeModules;
 
 let Threshold = 0.179; // contrast luminosity. Original formula calls for 0.179
+let Alpha = 1;
 
 const iOSOptions = {
   low: { dimension: 5, flexibility: 5, range: 40 },
@@ -48,17 +49,25 @@ export const getNamedSwatches = (image, callback) => {
 
 // eslint-disable-next-line consistent-return
 export const getAllSwatches = (options, image, callback) => {
+  if (options.alpha) {
+    Alpha = options.alpha;
+  }
+
   if (Platform.OS === 'android') {
     return RNPalette.getAllSwatches(image, (err, res) => {
       if (err) {
         return callback(err);
       }
       res.sort((a, b) => b.population - a.population);
-      const splitColor = res[0].color.split(',');
-      const r = Number.parseFloat(splitColor[0].split('rgba(')[1]);
-      const g = Number.parseFloat(splitColor[1]);
-      const b = Number.parseFloat(splitColor[2]);
-      res[0].hex = `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(0.6)}`;
+      res.forEach(item => {
+        const splitColor = item.color.split(',');
+        const r = Number.parseFloat(splitColor[0].split('rgba(')[1]);
+        const g = Number.parseFloat(splitColor[1]);
+        const b = Number.parseFloat(splitColor[2]);
+        const a = Number.parseFloat(splitColor[3].split(')')[0]);
+        item.hex = `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(a*255*Alpha)}`;
+      })
+
       return callback(err, res);
     });
   }
@@ -92,7 +101,7 @@ export const getAllSwatches = (options, image, callback) => {
         const g = uicolors[1];
         const b = uicolors[2];
         const a = uicolors[3];
-        const hex = `#${toHex(r * 255)}${toHex(g * 255)}${toHex(b * 255)}${toHex(0.6)}`;
+        const hex = `#${toHex(r * 255)}${toHex(g * 255)}${toHex(b * 255)}${toHex(a*255*Alpha)}`;
         const rgba = `rgba(${(r * 255).toFixed(0)}, ${(g * 255).toFixed(0)}, ${(b * 255).toFixed(0)}, ${a})`;
         // console.log("RGB: ", UIColor, "Dominance: ",res[UIColor], "HEX:", hex);
         swatches.push({ color: rgba,

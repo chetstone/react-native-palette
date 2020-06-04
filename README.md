@@ -60,9 +60,11 @@ Property | Type | Info
 -------- | ---- | ----
 `threshold` | Float | Determines whether white or black text will be selected to contrast with the selected color. It is the value for `L`, in the complex formula at the end of this [StackOverflow comment](http://stackoverflow.com/a/3943023/1404185). The default value is 0.179.
 `quality` | String | One of "low", "medium", or "high". Higher quality extracts more colors, takes more time and consumes more memory. Default is "low".
+`alpha` | Float | From 0 to 1. Determine alpha of hex property. Default is 1.
 
 #### image
 A path to an image such as that returned by [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker). For iOS use the `origURL` field of the image picker response, because only images from `assets-library://` have been tested. For Android use the `path` field.
+Updated: For IOS, also support local URI, which is returned from `RNFS.LibraryDirectoryPath`
 
 #### callback
 The callback is passed an error parameter and an array of swatches representing the dominant colors in the image. Typically 16 swatches are returned on Android, fewer on iOS.
@@ -101,6 +103,7 @@ population | The dominance of this swatch in the image. You can sort on this fie
 titleTextColor | A text color which contrasts well with the main swatch color for use in titles.
 bodyTextColor | A text color which contrasts well with the main swatch color for use as body text.
 swatchInfo | A string encapsulating all the above and more. Can be used for debugging. Android: Note that the hex strings are in the format `#aarrggbb` rather than the `react-native` format. iOS: the result string returned by the old (`react-native-color-grabber`) API.
+hex | Hex code, computed from color, in format `#rrggbbaa` .
 
 ### Example
 ```javascript
