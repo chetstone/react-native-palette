@@ -135,5 +135,6 @@ Thanks for your interest in improving `react-native-palette`. Please review the 
 4. If you're adding a new feature, please add something in the example app to demonstrate it.
 5. Please keep your changes concise and avoid unnecessary formatting/indentation changes. They make the diff difficult to understand and review. If you have an new idea for formatting that will save the world, by all means propose it, but at least include a `prettier` spec for automating it. This goes double for Java/Objective-C changes, since those are foreign languages to me.
 1. In your PR, please give a brief explanation of the purpose, referencing Issues when appropriate, and mention whether your change will require a patch, minor or major semver bump.
+6. Please document your changes in CHANGELOG.md.
 
 Thanks again.
