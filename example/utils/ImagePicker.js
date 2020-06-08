@@ -21,7 +21,7 @@ function named(swatches) {
 
 
 
-export default function(storeImage, useNamed) {
+export default function(storeImage, useNamed, useUri) {
   var max = Math.max(Dimensions.get('window').width,Dimensions.get('window').height);
 
   const options = {
@@ -45,8 +45,11 @@ export default function(storeImage, useNamed) {
       console.log('ImagePickerManager Error: ', response.error);
     }
     else {
+
       colors.image = response.data;
-      var path =  Platform.OS === 'ios' ? response.origURL : response.path;
+      var path =  Platform.OS === 'ios' ? 
+                      useUri ? response.uri.split('file://')[1] : response.origURL 
+                    : response.path;
       if (useNamed) {
         getNamedSwatches(path, (error, swatches) => {
           if ( error) {
