@@ -54,7 +54,7 @@ Use version 0.4.x of this package and follow linking steps below:
 
 #### options
 An object containing option properties.
-There are two properties and they're valid for iOS only. On Android, this parameter is ignored.
+These properties are valid for iOS only. On Android, this parameter is ignored.
 
 Property | Type | Info
 -------- | ---- | ----
@@ -64,6 +64,8 @@ Property | Type | Info
 
 #### image
 A path to an image such as that returned by [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker). For iOS use the `origURL` field of the image picker response for images from `assets-library://`. For Android use the `path` field. Also for IOS, you can use a local URI, such as that returned by `RNFS.LibraryDirectoryPath` in the [react-native-fs](https://github.com/itinance/react-native-fs/) library.
+
+For versions of [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker) >= 3.0.0, use `response.assets[0].uri.slice(7)`
 
 
 #### callback

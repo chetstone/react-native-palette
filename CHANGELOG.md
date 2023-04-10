@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ##[1.2.1] - 2023-04-09
 ## Changed
 - More liberal peer dependency for React
+- Add info to README for using react-native-image-picker >= 3.0.0
 
 ##[1.2.0] - 2023-04-09
 ### Changed
