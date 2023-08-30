@@ -12,7 +12,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.4.2")
+        classpath('com.android.tools.build:gradle:7.2.1')
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -20,6 +20,12 @@ buildscript {
 }
 
 allprojects {
+  // https://github.com/facebook/react-native/issues/35204#issuecomment-1304281740
+  configurations.all {
+    resolutionStrategy {
+      force "com.facebook.react:react-native:0.61.3"
+    }
+  }
     repositories {
         mavenLocal()
         maven {
@@ -34,5 +40,5 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-    }
+  }
 }
