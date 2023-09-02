@@ -35,21 +35,26 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
   }
 
   private String intToRGBA(int color) {
-      return String.format(Locale.ROOT,"rgba(%d,%d,%d,%.3f)", Color.red(color), Color.green(color), Color.blue(color), (float)(Color.alpha(color))/255.0);
+    return String.format(Locale.ROOT,"rgba(%d,%d,%d,%.3f)", Color.red(color), Color.green(color), Color.blue(color), (float)(Color.alpha(color))/255.0);
   }
 
   private Palette getPallet(final String realPath, final Callback callback) {
-    Bitmap bitmap = BitmapFactory.decodeFile(realPath);
-    // Throws if the specified color space is not ColorSpace.Model#RGB,
-    // or if the specified color space's transfer function is not an ColorSpace.Rgb.TransferParameters
-    if (bitmap == null) {
-      callback.invoke("Bitmap Null");
-    } else if (bitmap.isRecycled()) {
-      callback.invoke("Bitmap Recycled");
+    try {
+      Bitmap bitmap = BitmapFactory.decodeFile(realPath);
+      // Throws if the specified color space is not ColorSpace.Model#RGB,
+      // or if the specified color space's transfer function is not an ColorSpace.Rgb.TransferParameters
+
+      if (bitmap == null) {
+        callback.invoke("Bitmap Null");
+      } else if (bitmap.isRecycled()) {
+        callback.invoke("Bitmap Recycled");
+      }
+      return Palette.from(bitmap).generate();
+    } catch (IllegalArgumentException ex){
+      callback.invoke("Image incompatible with palette generator");
+      return null;
     }
-    return Palette.from(bitmap).generate();
-    // no info on error return or throw
-    // https://developer.android.com/reference/android/support/v7/graphics/Palette.Builder
+
   }
 
   private WritableMap convertSwatch(Palette.Swatch swatch) {
@@ -69,6 +74,9 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void getNamedSwatches(final String realPath, final Callback callback) {
     Palette palette = getPallet(realPath, callback);
+    if (palette == null) {
+      return;
+    }
     WritableMap swatches = Arguments.createMap();
 
     swatches.putMap("Vibrant", convertSwatch(palette.getVibrantSwatch()));
@@ -82,9 +90,12 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-    public void getAllSwatches(final String realPath, final Callback callback) {
+  public void getAllSwatches(final String realPath, final Callback callback) {
 
     Palette palette = getPallet(realPath, callback);
+    if (palette == null) {
+      return;
+    }
     WritableArray aSwatches = Arguments.createArray();
     List<Palette.Swatch> swatches = palette.getSwatches();
     ListIterator litr = swatches.listIterator();
