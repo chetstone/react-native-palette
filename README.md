@@ -54,17 +54,19 @@ Use version 0.4.x of this package and follow linking steps below:
 
 #### options
 An object containing option properties.
-There are two properties and they're valid for iOS only. On Android, this parameter is ignored.
+These properties are valid for iOS only. On Android, this parameter is ignored.
 
 Property | Type | Info
 -------- | ---- | ----
 `threshold` | Float | Determines whether white or black text will be selected to contrast with the selected color. It is the value for `L`, in the complex formula at the end of this [StackOverflow comment](http://stackoverflow.com/a/3943023/1404185). The default value is 0.179.
 `quality` | String | One of "low", "medium", or "high". Higher quality extracts more colors, takes more time and consumes more memory. Default is "low".
-`alpha` | Float | From 0 to 1. Determine alpha of hex property. Default is 1.
+`alpha` | Float | From 0 to 1. Determine alpha of hex property. Default is 1. This value is multiplied by the alpha returned from the underlying platform-specific code. It does not affect the alpha of the `color` (rgba), `titleTextColor`, or `bodyTextColor` fields.
 
 #### image
-A path to an image such as that returned by [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker). For iOS use the `origURL` field of the image picker response, because only images from `assets-library://` have been tested. For Android use the `path` field.
-Updated: For IOS, also support local URI, which is returned from `RNFS.LibraryDirectoryPath`
+A path to an image such as that returned by [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker). For iOS use the `origURL` field of the image picker response for images from `assets-library://`. For Android use the `path` field. Also for IOS, you can use a local URI, such as that returned by `RNFS.LibraryDirectoryPath` in the [react-native-fs](https://github.com/itinance/react-native-fs/) library.
+
+For versions of [`react-native-image-picker`](https://github.com/marcshilling/react-native-image-picker) >= 3.0.0, use `response.assets[0].uri.slice(7)`
+
 
 #### callback
 The callback is passed an error parameter and an array of swatches representing the dominant colors in the image. Typically 16 swatches are returned on Android, fewer on iOS.
@@ -135,5 +137,6 @@ Thanks for your interest in improving `react-native-palette`. Please review the 
 4. If you're adding a new feature, please add something in the example app to demonstrate it.
 5. Please keep your changes concise and avoid unnecessary formatting/indentation changes. They make the diff difficult to understand and review. If you have an new idea for formatting that will save the world, by all means propose it, but at least include a `prettier` spec for automating it. This goes double for Java/Objective-C changes, since those are foreign languages to me.
 1. In your PR, please give a brief explanation of the purpose, referencing Issues when appropriate, and mention whether your change will require a patch, minor or major semver bump.
+6. Please document your changes in CHANGELOG.md.
 
 Thanks again.

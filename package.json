@@ -1,6 +1,6 @@
 {
   "name": "react-native-palette",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "A react native component to extract prominent colors from an image",
   "keywords": [
     "react-native",
@@ -35,11 +35,7 @@
   },
   "license": "ISC",
   "peerDependencies": {
-    "react": "^16.8.1",
+    "react": ">=16.8.1",
     "react-native": ">=0.59.0-rc.0 <1.0.x"
-  },
-  "devDependencies": {
-    "react": "^16.8.3",
-    "react-native": "^0.59.10"
   }
 }
