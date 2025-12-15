@@ -46,8 +46,11 @@ public class RNPaletteModule extends ReactContextBaseJavaModule {
 
       if (bitmap == null) {
         callback.invoke("Bitmap Null");
-      } else if (bitmap.isRecycled()) {
+        return null;
+      }
+      if (bitmap.isRecycled()) {
         callback.invoke("Bitmap Recycled");
+        return null;
       }
       return Palette.from(bitmap).generate();
     } catch (IllegalArgumentException ex){
